@@ -46,44 +46,47 @@ void loop(){
  // } 
   if (!sensorState && lastState) {
     Serial.println("Broken");
-    count = count+1; 
+    count = count+1;
+      if (count>15){
+        count = 0;
+     }
+    countToBin2(count); 
   }
 
-  if (count>15){
-    count = 0;
-  }
-  counttobin(count);
+
   lastState = sensorState;
 }
 
-void counttobin(int num){
-
-  String number = String(num, BIN);
-  if (number[0] == 1){
+void countToBin2(int num){
+    Serial.println(num);
+  if((num-8)>=0){
+    num=num-8;
     digitalWrite(LED1, HIGH);
   }
-  else {
-    digitalWrite(LED1, LOW);
+  else{
+        digitalWrite(LED1, LOW);
   }
-  if (number[1] == 1){
+    if((num-4)>=0){
+    num=num-4;
     digitalWrite(LED2, HIGH);
   }
-  else {
-    digitalWrite(LED2, LOW);
+  else{
+        digitalWrite(LED2, LOW);
   }
-  if (number[2] == 1){
+    if((num-2)>=0){
+    num=num-2;
     digitalWrite(LED3, HIGH);
   }
-  else {
-    digitalWrite(LED3, LOW);
+  else{
+        digitalWrite(LED3, LOW);
   }
-  if (number[3] == 1){
+    if((num-1)>=0){
+    num=num-1;
     digitalWrite(LED4, HIGH);
   }
-  else {
-    digitalWrite(LED4, LOW);
+  else{
+        digitalWrite(LED4, LOW);
   }
-
 }
 
   
