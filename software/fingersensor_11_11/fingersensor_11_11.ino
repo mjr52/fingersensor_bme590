@@ -9,6 +9,9 @@
 
 #define SENSORPIN 8
 
+#define POWER 9
+#define RESET 10
+
  int count = 0;
  
 // variables will change:
@@ -19,6 +22,8 @@ void setup() {
   //pinMode(LEDPIN, OUTPUT);      
   // initialize the sensor pin as an input:
   pinMode(SENSORPIN, INPUT);   
+  pinMode(POWER, INPUT);   
+  pinMode(RESET, INPUT);   
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
@@ -36,7 +41,22 @@ void setup() {
 void loop(){
   // read the state of the pushbutton value:
   sensorState = digitalRead(SENSORPIN);
- 
+  if (digitalRead(POWER)==HIGH){
+    count=0;
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    powerLoop();
+  }
+  if(digitalRead(RESET)==HIGH){
+    count=0;
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    delay(300);
+  }
   // check if the sensor beam is broken
   // if it is, the sensorState is LOW:
   
@@ -55,6 +75,13 @@ void loop(){
 
 
   lastState = sensorState;
+}
+
+void powerLoop(){
+  delay(300);
+  while(digitalRead(POWER)==LOW){
+    // just wait  
+  }
 }
 
 void countToBin2(int num){
